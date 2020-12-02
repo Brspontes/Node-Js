@@ -2,5 +2,10 @@
     "extends": "standard-with-typescript",
     "parserOptions": {
         "project": "./tsconfig.json"
+    },
+    "rules": {
+        "indent": "off",
+        "@typescript-eslint/indent": "off",
+        "@typescript-eslint/no-redeclare": "off"
     }
 }
