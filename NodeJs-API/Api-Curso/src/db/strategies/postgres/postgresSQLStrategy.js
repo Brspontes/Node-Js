@@ -2,15 +2,13 @@ const IDb = require('../base/interfaceDb');
 const Sequelize = require('sequelize');
  
 class PostgreSQLStrategy extends IDb {
-  //1o
-
   constructor(connection, schema) {
     super();
     this._db = schema;
     this._connection = connection;
 
   }
-  //2o
+
   static async defineModel(connection, schema) {
     const model = connection.define(
       schema.name, schema.schema, schema.options,

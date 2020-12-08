@@ -7,10 +7,10 @@ const STATUS = {
     3: 'Disconectando',
 }
 class MongoDB extends ICrud {
-    
-     // 1o 
+    // 3o
     constructor(connection, schema) {
         super()
+        // 4o
         this._connection = connection;
         this._collection = schema;
     }
@@ -26,7 +26,7 @@ class MongoDB extends ICrud {
         return STATUS[this._connection.readyState]
 
     }
-    // 3o
+     // 1o 
     static connect() {
         Mongoose.connect('mongodb://brspontes:minhasenhasecreta@localhost:27017/herois', {
             useNewUrlParser: true
