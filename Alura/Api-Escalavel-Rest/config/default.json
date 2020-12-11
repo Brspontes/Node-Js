@@ -1,0 +1,11 @@
+{
+    "mysql": {
+        "database": "agendapetshop",
+        "user": "root",
+        "password": "root",
+        "host": "localhost"
+    },
+    "api": {
+        "port": 4000
+    }
+}
