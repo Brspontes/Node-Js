@@ -19,7 +19,7 @@ class IHeroes {
         throw new NotImplementedException()
     }
 
-    update (item) {
+    update (id, item) {
         throw new NotImplementedException()
     }
 

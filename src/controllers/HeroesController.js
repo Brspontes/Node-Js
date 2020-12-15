@@ -19,4 +19,35 @@ module.exports = app => {
             })
             .catch(errors => res.status(500).json(errors))
     })
+
+    app.get('/heroes/:id', async (req, res) => {
+        const { id } = req.params
+
+        await HeroesModel.readById(id)
+            .then(Heroes => {
+                res.status(200).json(Heroes[0])
+            })
+            .catch(errors => res.status(500).json(errors))
+    })
+
+    app.put('/heroes/:id', async (req, res) => {
+        const { id } = req.params
+        const hero = req.body
+
+        await HeroesModel.update(id, hero)
+            .then(Heroes => {
+                res.status(200).json({ ...hero, id })
+            })
+            .catch(errors => res.status(500).json(errors))
+    })
+
+    app.delete('/heroes/:id', async (req, res) => {
+        const { id } = req.params
+
+        await HeroesModel.delete(id)
+            .then(Heroes => {
+                res.status(200)
+            })
+            .catch(errors => res.status(500).json(errors))
+    })
 }

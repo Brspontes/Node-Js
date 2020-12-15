@@ -12,6 +12,18 @@ class HeroesModel extends IHeroes {
     async readAll () {
         return await HeroesRepository.readAll()
     }
+
+    async readById (id) {
+        return await HeroesRepository.readById(id)
+    }
+
+    async update (id, item) {
+        return await HeroesRepository.update(id, item)
+    }
+
+    async delete (id) {
+        return await HeroesRepository.delete(id)
+    }
 }
 
 module.exports = new HeroesModel()
