@@ -1,4 +1,6 @@
 const HeroesModel = require('./../models/heroesModel')
+const StatusCode = require('./../utils/ConstMessages/statusCode')
+const Messages = require('./../utils/ConstMessages/messages')
 
 module.exports = app => {
     
@@ -7,17 +9,22 @@ module.exports = app => {
         await HeroesModel.add(heroes)
             .then(HeroesAdded => {
                 const { insertId } = HeroesAdded
-                res.status(201).json({ ...heroes, insertId })
+                res.status(StatusCode.Created).json(
+                    { 
+                        id: insertId, 
+                        ...heroes,  
+                        message: Messages.SuccessCreated 
+                    })
             })
-            .catch(errors => res.status(500).json(errors))
+            .catch(errors => res.status(StatusCode.InternalServerError).json(errors))
     }),
 
     app.get('/heroes', async (req, res) => {
         await HeroesModel.readAll()
             .then(Heroes => {
-                res.status(200).json(Heroes)
+                res.status(StatusCode.Ok).json(Heroes)
             })
-            .catch(errors => res.status(500).json(errors))
+            .catch(errors => res.status(StatusCode.InternalServerError).json(errors))
     })
 
     app.get('/heroes/:id', async (req, res) => {
@@ -25,9 +32,9 @@ module.exports = app => {
 
         await HeroesModel.readById(id)
             .then(Heroes => {
-                res.status(200).json(Heroes[0])
+                res.status(StatusCode.Ok).json(Heroes[0])
             })
-            .catch(errors => res.status(500).json(errors))
+            .catch(errors => res.status(StatusCode.InternalServerError).json(errors))
     })
 
     app.put('/heroes/:id', async (req, res) => {
@@ -36,9 +43,14 @@ module.exports = app => {
 
         await HeroesModel.update(id, hero)
             .then(Heroes => {
-                res.status(200).json({ ...hero, id })
+                res.status(StatusCode.Ok).json(
+                    { 
+                        id: id, 
+                        ...hero,
+                        message: Messages.SuccessUpdated
+                    })
             })
-            .catch(errors => res.status(500).json(errors))
+            .catch(errors => res.status(StatusCode.InternalServerError).json(errors))
     })
 
     app.delete('/heroes/:id', async (req, res) => {
@@ -46,8 +58,8 @@ module.exports = app => {
 
         await HeroesModel.delete(id)
             .then(Heroes => {
-                res.status(200)
+                res.status(StatusCode.Ok).json(Messages.SuccessDeleted)
             })
-            .catch(errors => res.status(500).json(errors))
+            .catch(errors => res.status(StatusCode.InternalServerError).json(errors))
     })
 }
