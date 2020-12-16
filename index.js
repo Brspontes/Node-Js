@@ -2,7 +2,10 @@ const express = require('express')()
 const bodyParser = require('body-parser')
 const config = require('config')
 const consign = require('consign')
+const swaggerUi = require('swagger-ui-express')
+swaggerDocument = require('./swagger.json')
 
+express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 express.use(bodyParser.json())
 express.use(bodyParser.urlencoded( {extended: true} ))
 

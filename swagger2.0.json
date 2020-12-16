@@ -1,0 +1,99 @@
+{
+    "swagger":"2.0",
+    "info":{
+       "version":"1.0.0",
+       "title":"My User Project CRUD",
+       "description":"My User Project Application API",
+       "license":{
+          "name":"MIT",
+          "url":"https://opensource.org/licenses/MIT"
+       }
+    },
+    "host":"localhost:4000",
+    "basePath":"/",
+    "tags":[
+       {
+          "name":"Heroes",
+          "description":"API for Heroes"
+       }
+    ],
+    "schemes":[
+       "http"
+    ],
+    "consumes":[
+       "application/json"
+    ],
+    "produces":[
+       "application/json"
+    ],
+    "paths": {
+        "/heroes": {
+            "post": {
+                "tags":[
+                    "Heroes"
+                ],
+                "description": "Cadastro de Herói",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "identidade_secreta": "string",
+                        "nome_heroi": "string",
+                        "poder": "string",
+                        "schema": {
+                            "$ref": "#definitions/NewHero"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#definitions/NewHeroSuccess" 
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions":{
+        "NewHero": {
+            "required": [
+                "identidade_secreta",
+                "nome_heroi",
+                "poder"
+            ],
+            "properties": {
+                "identidade_secreta": {
+                    "type": "string"
+                },
+                "nome_heroi": {
+                    "type": "string"
+                },
+                "poder": {
+                    "type": "string"
+                }
+            }
+        },
+        "NewHeroSuccess": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "identidade_secreta": {
+                    "type": "string"
+                },
+                "nome_heroi": {
+                    "type": "string"
+                },
+                "poder": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+ }
