@@ -1,11 +1,17 @@
 const HeroesModel = require('./../models/heroesModel')
 const StatusCode = require('./../utils/ConstMessages/statusCode')
 const Messages = require('./../utils/ConstMessages/messages')
+const Schema = require('./../schemas/hero.schema')
 
 module.exports = app => {
     
     app.post('/heroes', async (req, res) => {
         const heroes = req.body
+        const { error } = Schema.validate(heroes, { abortEarly: false })
+        
+        if (error)
+            res.status(StatusCode.BadRequest).json({ message: 'Valores inrvalidos', error })
+
         await HeroesModel.add(heroes)
             .then(HeroesAdded => {
                 const { insertId } = HeroesAdded
@@ -40,6 +46,10 @@ module.exports = app => {
     app.put('/heroes/:id', async (req, res) => {
         const { id } = req.params
         const hero = req.body
+
+        const { error } = Schema.validate(hero, { abortEarly: false })
+        if (error)
+            res.status(StatusCode.BadRequest).json({ message: 'Valores inrvalidos', error })
 
         await HeroesModel.update(id, hero)
             .then(Heroes => {
