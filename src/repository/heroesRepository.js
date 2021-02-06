@@ -1,5 +1,7 @@
+require('dotenv').config() 
 const IHeroes = require('./../domain/interfaces/IHeroes')
 const connection = require('./dbContext/connection')
+const fs = require('fs')
 
 class HeroesRepository extends IHeroes {
     constructor() {
@@ -8,13 +10,19 @@ class HeroesRepository extends IHeroes {
 
     async add (item) {
         const query = 'INSERT INTO HEROES SET ?'
+        
+        const caminhoimagem = `${process.env.CAMINHO_CDN}\\${item.identidade_secreta}.jpg`
+        const bitmap = Buffer.from(item.caminhoimagem, 'base64')
+        fs.writeFileSync(caminhoimagem, bitmap)
 
+        const objects = { ...item, caminhoimagem }
         return new Promise((resolve, reject) => {
-            connection.query(query, item, (error, result) => {
+            connection.query(query, objects, (error, result) => {
                 if (error)
                     reject(error)
-                else
+                else {
                     resolve(result)
+                }
             })
         })
     }

@@ -253,6 +253,9 @@
           "poder": {
             "type": "string",
             "example": "Poder Heroi"
+          },
+          "imagem": {
+            "type": "string"
           }
         }
       },

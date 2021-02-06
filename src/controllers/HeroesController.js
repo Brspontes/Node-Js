@@ -1,3 +1,4 @@
+require('dotenv').config()
 const HeroesModel = require('./../models/heroesModel')
 const StatusCode = require('./../utils/ConstMessages/statusCode')
 const Messages = require('./../utils/ConstMessages/messages')
@@ -10,15 +11,17 @@ module.exports = app => {
         const { error } = Schema.validate(heroes, { abortEarly: false })
         
         if (error)
-            res.status(StatusCode.BadRequest).json({ message: 'Valores inrvalidos', error })
+            return res.status(StatusCode.BadRequest).json({ message: 'Valores inrvalidos', error })
 
+        //TODO: Adicionar pasta publica do mega para download
         await HeroesModel.add(heroes)
             .then(HeroesAdded => {
                 const { insertId } = HeroesAdded
-                res.status(StatusCode.Created).json(
+                return res.status(StatusCode.Created).json(
                     { 
                         id: insertId, 
-                        ...heroes,  
+                        ...heroes,
+                        caminhoimagem: `${}`,  
                         message: Messages.SuccessCreated 
                     })
             })
